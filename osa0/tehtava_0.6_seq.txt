@@ -1,0 +1,18 @@
+title Tehtävä 0.6
+note over Selain:
+Käyttäjä syöttää noten ja
+lähettää (submit).
+end note
+
+Selain->Palvelin: HTTP POST: https://fullstack-exampleapp.herokuapp.com/new_note_spa
+note over Palvelin
+Noten sisältö on POST requestin body.
+end note
+
+note over Selain
+Uusi note tallennetaan selaimen
+muuttujaan notes[].
+Sivun notet piirretään uudelleen
+selaimen ajaessa redrawNotes()-
+metodin
+end note

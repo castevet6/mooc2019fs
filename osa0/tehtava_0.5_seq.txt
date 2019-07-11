@@ -1,0 +1,22 @@
+title Tehtävä 0.5
+note over Selain:
+Käyttäjä menee osoitteeseen
+end note
+
+Selain->Palvelin: HTTP GET: https://fullstack-exampleapp.herokuapp.com/spa
+Palvelin-->Selain: HTML-koodi
+Selain->Palvelin: HTTP GET: https://fullstack-exampleapp.herokuapp.com/main.css
+Palvelin->Selain: main.css
+Selain->Palvelin: HTTP GET: https://fullstack-exampleapp.herokuapp.com/spa.js
+Palvelin->Selain: spa.js
+note over Selain
+Selain alkaa suorittaa spa.js koodia,
+ja pyytää xhr requestina data.json 
+tiedoston palvelimelta.
+end note
+Selain->Palvelin: HTTP GET: https://fullstack-exampleapp.herokuapp.com/data.json
+Palvelin->Selain: data.json sisältö
+note over Selain
+Selain suorittaa metodin redrawNotes()
+ja tiedot päivittyvät sivulle
+end note

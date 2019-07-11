@@ -1,0 +1,10 @@
+title Tehtävä 0.4
+note over Selain:
+Käytättäjä antaa syötteen
+josta generoidaan HTTP POST
+-tyyppinen request, requestin
+body on uusi viesti
+end note
+
+Selain->Palvelin: HTTP POST request, request bodyna uusi viesti
+Palvelin-->Selain: HTML-koodi, palvelin uudelleenohjaa takaisin /notes sivulle
