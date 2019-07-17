@@ -8,8 +8,8 @@ const Button = ({ handleClick, text }) => (
     </button>
 )
 
-// Display-komponentti joka esittää nimen ja arvon (esim. good 0)
-const Display = ({ name, value }) => (
+// Statistic-komponentti joka esittää nimen ja arvon (esim. good 0)
+const Statistic = ({ name, value }) => (
     <div>
         {name} {value}
     </div>
@@ -23,12 +23,12 @@ const Statistics = ({ values }) => {
     if ((good + neutral + bad) > 0) {
         return (
             <div>
-                <Display name='good' value={good} />
-                <Display name='neutral' value={neutral} />
-                <Display name='bad' value={bad} />
-                <Display name='all' value={ good + neutral + bad } />
-                <Display name='average' value={ (good - bad) / (good + neutral + bad) }  />
-                <Display name='positive' value={ 100* (good / (good + neutral + bad)) + ' %' } />
+                <Statistic name='good' value={good} />
+                <Statistic name='neutral' value={neutral} />
+                <Statistic name='bad' value={bad} />
+                <Statistic name='all' value={ good + neutral + bad } />
+                <Statistic name='average' value={ (good - bad) / (good + neutral + bad) }  />
+                <Statistic name='positive' value={ 100* (good / (good + neutral + bad)) + ' %' } />
             </div>        
         )
     }
