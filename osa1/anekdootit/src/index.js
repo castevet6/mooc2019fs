@@ -17,15 +17,17 @@ const App = (props) => {
   // 'next anecdote' painettu
   const handleNextAnecdote = () => setSelected(Math.floor(props.anecdotes.length * Math.random()))
   // 'vote' painettu
-
   const handleVote = () => {
       const copy = [...votes];
       copy[selected]++;
       setVotes(copy);
   }
 
+  const maxVotes = () => votes.indexOf(Math.max(...votes))
+
   return (
     <div>
+        <h1>Anecdote of the day</h1>
         <p>
             {props.anecdotes[selected]} 
         </p>
@@ -34,6 +36,13 @@ const App = (props) => {
         </p>
         <Button handleClick={handleVote} text='vote' />
         <Button handleClick={handleNextAnecdote} text='next anecdote' />
+        <h1>Anecdote with most votes</h1>
+        <p>
+            {props.anecdotes[maxVotes()]}
+        </p>
+        <p>
+            has {votes[maxVotes()]} votes
+        </p>
     </div>
   )
 }
