@@ -19,13 +19,24 @@ const Display = ({ name, value }) => (
 // ja niitä vastaavat lukuarvot
 const Statistics = ({ values }) => {
     const { good, neutral, bad } = values;  
+
+    if ((good + neutral + bad) > 0) {
+        return (
+            <div>
+                <Display name='good' value={good} />
+                <Display name='neutral' value={neutral} />
+                <Display name='bad' value={bad} />
+                <Display name='all' value={ good + neutral + bad } />
+                <Display name='average' value={ (good - bad) / (good + neutral + bad) }  />
+                <Display name='positive' value={ 100* (good / (good + neutral + bad)) + ' %' } />
+            </div>        
+        )
+    }
+
     return (
-    <div>
-        <Display name='all' value={ good + neutral + bad } />
-        <Display name='average' value={ (good - bad) / (good + neutral + bad) }  />
-        <Display name='positive' value={ 100* (good / (good + neutral + bad)) + ' %' } />
-    </div>
-)}
+        <div>No feedback given</div>
+    )
+}
 
 const App = () => {
     // tilat eri palautteille
@@ -45,9 +56,6 @@ const App = () => {
             <Button handleClick={handleNeutralClick} text='neutral' />
             <Button handleClick={handleBadClick} text='bad' />
             <h1>Statistics</h1>
-            <Display name='good' value={good} />
-            <Display name='neutral' value={neutral} />
-            <Display name='bad' value={bad} />
             <Statistics values={( { good: good, neutral: neutral, bad: bad })} />
         </div>
     )
