@@ -15,6 +15,18 @@ const Display = ({ name, value }) => (
     </div>
 )
 
+// Statistics komponentti saa propsina objektin jossa keyt good, neutral, bad
+// ja niitä vastaavat lukuarvot
+const Statistics = ({ values }) => {
+    const { good, neutral, bad } = values;  
+    return (
+    <div>
+        <Display name='all' value={ good + neutral + bad } />
+        <Display name='average' value={ (good - bad) / (good + neutral + bad) }  />
+        <Display name='positive' value={ 100* (good / (good + neutral + bad)) + ' %' } />
+    </div>
+)}
+
 const App = () => {
     // tilat eri palautteille
     const [ good, setGood ] = useState(0)
@@ -36,9 +48,7 @@ const App = () => {
             <Display name='good' value={good} />
             <Display name='neutral' value={neutral} />
             <Display name='bad' value={bad} />
-            <Display name='all' value={ good + neutral + bad } />
-            <Display name='average' value={ (good - bad) / (good + neutral + bad) }  />
-            <Display name='positive' value={ 100* (good / (good + neutral + bad)) + ' %' } />
+            <Statistics values={( { good: good, neutral: neutral, bad: bad })} />
         </div>
     )
 }
