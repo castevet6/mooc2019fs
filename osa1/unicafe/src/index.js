@@ -10,9 +10,10 @@ const Button = ({ handleClick, text }) => (
 
 // Statistic-komponentti joka esittää nimen ja arvon (esim. good 0)
 const Statistic = ({ name, value }) => (
-    <div>
-        {name} {value}
-    </div>
+    <tr>
+        <td>{name}</td>
+        <td>{value}</td>
+    </tr>
 )
 
 // Statistics komponentti saa propsina objektin jossa keyt good, neutral, bad
@@ -23,12 +24,16 @@ const Statistics = ({ values }) => {
     if ((good + neutral + bad) > 0) {
         return (
             <div>
-                <Statistic name='good' value={good} />
-                <Statistic name='neutral' value={neutral} />
-                <Statistic name='bad' value={bad} />
-                <Statistic name='all' value={ good + neutral + bad } />
-                <Statistic name='average' value={ (good - bad) / (good + neutral + bad) }  />
-                <Statistic name='positive' value={ 100* (good / (good + neutral + bad)) + ' %' } />
+                <table>
+                    <tbody>
+                        <Statistic name='good' value={good} />
+                        <Statistic name='neutral' value={neutral} />
+                        <Statistic name='bad' value={bad} />
+                        <Statistic name='all' value={ good + neutral + bad } />
+                        <Statistic name='average' value={ ((good - bad) / (good + neutral + bad)).toFixed(1) }  />
+                        <Statistic name='positive' value={ (100* (good / (good + neutral + bad))).toFixed(1) + ' %' } />                    
+                    </tbody>
+                </table>>
             </div>        
         )
     }
