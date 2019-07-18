@@ -10,6 +10,12 @@ const App = () => {
 
     const handleNewPerson = (event) => {
         event.preventDefault()
+        
+        // tarkastetaan onko nimi jo persons-taulukossa
+        if (persons.filter(p => p.name === newName).length > 0) {
+            alert(`${newName} is already added to phonebook`)
+            return
+        }
         const personObj = {
             name: newName
         }
