@@ -1,23 +1,27 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Person from './components/Person'
 import PersonForm from './components/PersonForm'
 import Filter from './components/Filter'
+import axios from 'axios'
 
 const App = () => {
-    const [ persons, setPersons] = useState([
-        { name: 'Antti Manninen', number: '112233'},
-        { name: 'Ada Lovelace', number: '445566' },
-        { name: 'Seppo Kumi', number: '99999' },
-
-    ]) 
+    const [ persons, setPersons] = useState([]) 
     const [ newName, setNewName ] = useState('')
     const [ newNumber, setNewNumber] = useState('')
     const [ filtering, setNewFiltering ] = useState('')
 
+    useEffect(() => {
+        console.log('effect started in App.js');
+        axios.get('http://localhost:3001/persons')
+            .then(response => {
+                console.log('Promise fulfilled');
+                setPersons(response.data);
+            })
+    }, [])
+    console.log('rendered', persons.length,'persons')
+
     const handleNewPerson = (event) => {
         event.preventDefault()
-        
-        // tarkastetaan onko nimi jo persons-taulukossa
         if (persons.filter(p => p.name === newName).length > 0) {
             alert(`${newName} is already added to phonebook`)
         } else {
