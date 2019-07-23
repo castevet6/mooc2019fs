@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import axios from 'axios'
 import Finder from './components/Finder'
+import DetailedCountry from './components/DetailedCountry'
 import Country from './components/Country'
 
 const App = () => {
@@ -18,8 +19,13 @@ const App = () => {
 
     const filteredCountries = countries.filter(country => country.name.toLowerCase().startsWith(findTerm.toLowerCase()))
 
-    const showCountries = () => filteredCountries.map(country => <p key={country.name}>{country.name}</p>);
+    const registerHandler = (name) => () => {
+        setFindTerm(name);
+    }
 
+    const showCountries = () => filteredCountries.map(country => 
+        <Country key={country.name} country={country} handleClick={registerHandler(country.name)}/>
+    );
     
     if (filteredCountries.length > 1 && filteredCountries.length < 10) {
         return (
@@ -32,7 +38,7 @@ const App = () => {
         return (
             <div>
                 <Finder handleFilteringChange={handleFilteringChange} />
-                <Country country={filteredCountries[0]} />
+                <DetailedCountry country={filteredCountries[0]} />
             </div>
         )
     } else if (filteredCountries.length > 10) {
