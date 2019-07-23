@@ -19,7 +19,7 @@ const App = () => {
             })
     }, [])
     console.log('rendered', persons.length,'persons')
-
+    
     const handleNewPerson = (event) => {
         event.preventDefault()
         if (persons.filter(p => p.name === newName).length > 0) {
@@ -29,10 +29,13 @@ const App = () => {
                 name: newName,
                 number: newNumber
             }
-            setPersons(persons.concat(personObj))    
+            axios.post('http://localhost:3001/persons', personObj)
+            .then(response => {
+                setPersons(persons.concat(personObj))    
+                setNewName('')
+                setNewNumber('')
+            })
         }
-        setNewName('')
-        setNewNumber('')
     }
 
     const handleNewName = (event) => {
