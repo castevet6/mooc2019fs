@@ -1,8 +1,11 @@
 import React from 'react'
 
-const Person = ({name, number}) => (
+const Person = ({name, number, handleDelete}) => (
     <div>
-        {name} {number}
+        <form onSubmit={handleDelete}>
+            {name} {number}
+            <button type="submit">delete</button>
+        </form>
     </div>
 )
 

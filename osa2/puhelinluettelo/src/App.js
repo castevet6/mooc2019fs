@@ -47,10 +47,14 @@ const App = () => {
     const handleFilteringChange = (event) => {
         setNewFiltering(event.target.value)
     }
+    
+    // Handler for clicking delete button
+    const handleDelete = id => personService.deleteUser(id)
 
     const filteredPersons = persons.filter(person => person.name.toLowerCase().startsWith(filtering.toLowerCase()))
+
     const showPersons = () => filteredPersons.map(person =>
-        <Person key={person.name} name={person.name} number={person.number} />
+        <Person key={person.name} name={person.name} number={person.number} handleDelete={() => handleDelete(person.id)}/>
     )
 
     return (

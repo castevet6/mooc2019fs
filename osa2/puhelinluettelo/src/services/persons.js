@@ -12,4 +12,12 @@ const create = newObject => {
     return request.then(response => response.data)
 }
 
-export default { getAll, create }
+const deleteUser = id => {
+    let confirm = window.confirm("Are you sure you want to delete?")
+    if (confirm) {
+        const request = axios.delete(baseUrl + "/" + id)
+        return request.then(console.log("Delete done"))
+    }
+}
+
+export default { getAll, create, deleteUser }
