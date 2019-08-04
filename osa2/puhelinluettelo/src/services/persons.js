@@ -12,8 +12,8 @@ const create = newObject => {
     return request.then(response => response.data)
 }
 
-const deleteUser = id => {
-    let confirm = window.confirm("Are you sure you want to delete?")
+const deleteUser = (name, id) => {
+    let confirm = window.confirm("Are you sure you want to delete " + name + "?")
     if (confirm) {
         const request = axios.delete(baseUrl + "/" + id)
         return request.then(console.log("Delete done"))
