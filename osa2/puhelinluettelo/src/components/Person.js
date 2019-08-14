@@ -2,10 +2,8 @@ import React from 'react'
 
 const Person = ({name, number, handleDelete}) => (
     <div>
-        <form onSubmit={handleDelete}>
-            {name} {number}
-            <button type="submit">delete</button>
-        </form>
+        {name} {number}
+        <button onClick={handleDelete}>delete</button>
     </div>
 )
 

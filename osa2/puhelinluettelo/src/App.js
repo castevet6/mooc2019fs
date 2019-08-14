@@ -2,13 +2,16 @@ import React, { useState, useEffect } from 'react'
 import Person from './components/Person'
 import PersonForm from './components/PersonForm'
 import Filter from './components/Filter'
+import Notification from './components/Notification'
 import personService from './services/persons'
+import './index.css'
 
 const App = () => {
     const [ persons, setPersons] = useState([]) 
     const [ newName, setNewName ] = useState('')
     const [ newNumber, setNewNumber] = useState('')
     const [ filtering, setNewFiltering ] = useState('')
+    const [ errorMessage, setErrorMessage ] = useState(null)
 
     useEffect(() => {
         personService.getAll()
@@ -20,7 +23,9 @@ const App = () => {
     const handleNewPerson = (event) => {
         event.preventDefault()
         if (persons.filter(p => p.name === newName).length > 0) {
-            alert(`${newName} is already added to phonebook`)
+            const id = persons.find(per => per.name === newName).id
+            personService.updateUser(id, newName, newNumber)
+                .then(setPersons(persons.map(per => per.id === id ? { ...per, number: newNumber } : per)))
         } else {
             const personObj = {
                 name: newName,
@@ -33,6 +38,8 @@ const App = () => {
                 setNewName('')
                 setNewNumber('')
             })
+            setErrorMessage(`Added ${personObj.name} to phonebook`)
+            setTimeout(() => setErrorMessage(null), 5000)
         }
     }
 
@@ -47,19 +54,26 @@ const App = () => {
     const handleFilteringChange = (event) => {
         setNewFiltering(event.target.value)
     }
-    
+
+
     // Handler for clicking delete button
-    const handleDelete = (name, id) => personService.deleteUser(name, id)
+    const handleDelete = (name) => {
+        const id = persons.find(per => per.name === name).id
+        personService.deleteUser(name, id)
+            .then(setPersons(persons.filter(p => p.name !== name)))        
+        setTimeout(() => setErrorMessage(null), 5000)
+    }
 
     const filteredPersons = persons.filter(person => person.name.toLowerCase().startsWith(filtering.toLowerCase()))
 
     const showPersons = () => filteredPersons.map(person =>
-        <Person key={person.name} name={person.name} number={person.number} handleDelete={() => handleDelete(person.name, person.id)}/>
+        <Person key={person.name} name={person.name} number={person.number} handleDelete={() => handleDelete(person.name)} />
     )
 
     return (
         <div>
             <h2>Phonebook</h2>
+            <Notification message={errorMessage}/>
             <Filter handleFilteringChange={handleFilteringChange} />
             <h2>add a new</h2>
             <PersonForm
@@ -75,5 +89,5 @@ const App = () => {
     )
 
 }
-
+    
 export default App

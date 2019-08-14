@@ -20,4 +20,16 @@ const deleteUser = (name, id) => {
     }
 }
 
-export default { getAll, create, deleteUser }
+const updateUser = (id, name, num) => {
+    let confirm = window.confirm(`Name ${name} already exists. Do you want to overwrite?`)
+    if (confirm) {
+        const request = axios.put(baseUrl + "/" + id, {
+            id: id,
+            name: name,
+            number: num,
+        })
+        return request.then(console.log("Update done"))    
+    }
+}
+
+export default { getAll, create, deleteUser, updateUser }
