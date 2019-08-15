@@ -24,8 +24,28 @@ const App = () => {
         event.preventDefault()
         if (persons.filter(p => p.name === newName).length > 0) {
             const id = persons.find(per => per.name === newName).id
-            personService.updateUser(id, newName, newNumber)
-                .then(setPersons(persons.map(per => per.id === id ? { ...per, number: newNumber } : per)))
+            console.log("id", id)
+            const updatePersonObj = {
+                id: id,
+                name: newName,
+                number: newNumber
+            }
+            personService.updateUser(updatePersonObj)
+                .then(response => {
+                    setPersons(persons.map(per => per.id === id ? { ...per, number: updatePersonObj.number } : per))
+                    setNewName('')
+                    setNewNumber('')
+                    setErrorMessage(`Updated ${newName} to phonebook`)
+                    setTimeout(() => setErrorMessage(null), 5000)
+                    return response
+                })
+                .catch(error => {
+                    setErrorMessage("Person " + updatePersonObj.name + " was already deleted from server.");
+                    setTimeout(() => setErrorMessage(null), 5000)
+                    // Haetaan kaikki henkilöt jotta sivu rendautuu oikein virhetilan jälkeen
+                    personService.getAll()
+                    .then(persons => setPersons(persons))
+                })
         } else {
             const personObj = {
                 name: newName,

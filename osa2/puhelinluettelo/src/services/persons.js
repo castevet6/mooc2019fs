@@ -20,13 +20,13 @@ const deleteUser = (name, id) => {
     }
 }
 
-const updateUser = (id, name, num) => {
+const updateUser = ({id, name, number}) => {
     let confirm = window.confirm(`Name ${name} already exists. Do you want to overwrite?`)
     if (confirm) {
         const request = axios.put(baseUrl + "/" + id, {
             id: id,
             name: name,
-            number: num,
+            number: number,
         })
         return request.then(console.log("Update done"))    
     }
